@@ -2,6 +2,7 @@ import java.io.*;
 import java.lang.*;
 import java.util.*;
 import java.util.zip.*;
+import java.nio.file.*;
 
 public class main {
     static StringBuilder s = new StringBuilder();
@@ -13,16 +14,83 @@ public class main {
     }
 
     static void generate() {
-		out out = new out("big");
-		code(out);
-		out.close();
+		String[] files = {"big"};
+		for(String file : files){
+			out out = new out(file);
+			in in = new in(file); 
+		  
+			code(in, out);
+			out.close();
+		}
     }
 
-    static void code(out out) {
-		out.print("a ");
+    static void code(in in, out out) {
+		
+		System.out.println(in.nextInt());
+		out.print("2 ");
         out.println(22);
     }
 }
+
+class in 
+    { 
+        BufferedReader br; 
+        StringTokenizer st; 
+  
+        public in(String file) 
+        { 
+			try {
+				br = new BufferedReader(new FileReader("files_in/" + file + ".in")); 
+			} catch(FileNotFoundException e){
+				System.out.println(e);
+			}
+        } 
+  
+        String next() 
+        { 
+            while (st == null || !st.hasMoreElements()) 
+            { 
+                try
+                { 
+                    st = new StringTokenizer(br.readLine()); 
+                } 
+                catch (IOException  e) 
+                { 
+                    e.printStackTrace(); 
+                } 
+            } 
+            return st.nextToken(); 
+        } 
+  
+        int nextInt() 
+        { 
+            return Integer.parseInt(next()); 
+        } 
+  
+        long nextLong() 
+        { 
+            return Long.parseLong(next()); 
+        } 
+  
+        double nextDouble() 
+        { 
+            return Double.parseDouble(next()); 
+        } 
+  
+        String nextLine() 
+        { 
+            String str = ""; 
+            try
+            { 
+                str = br.readLine(); 
+            } 
+            catch (IOException e) 
+            { 
+                e.printStackTrace(); 
+            } 
+            return str; 
+        } 
+    } 
 
 class file{
     String dir = "";
@@ -70,12 +138,8 @@ class file{
 
     void deletewithzip(){
 
-        String PATH = dir + "files_in";
+        String PATH = dir + "files_out";
         File directory = new File(PATH);
-        deleteutil(directory);
-
-        PATH = dir + "files_out";
-        directory = new File(PATH);
         deleteutil(directory);
 
         PATH = dir + "testcase.zip";
